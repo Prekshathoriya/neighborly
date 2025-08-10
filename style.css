@@ -1,0 +1,337 @@
+/* ===========================
+   Neighborly — style.css
+   Palette (max 5 colors)
+   Soft Gray Mist   : #E5E3E1
+   Warm Sandstone   : #D6CCC3
+   Muted Khaki      : #BBB891
+   Sage Green       : #6A8D73
+   Deep Espresso    : #342821
+   =========================== */
+
+/* --------- Variables --------- */
+:root{
+  --bg: #E5E3E1;            /* Soft Gray Mist (background) */
+  --sand: #D6CCC3;          /* Warm Sandstone */
+  --khaki: #BBB891;         /* Muted Khaki */
+  --sage: #6A8D73;          /* Sage Green (accent) */
+  --espresso: #342821;      /* Deep Espresso Brown (text/strong) */
+
+  --glass: rgba(255,255,255,0.6);
+  --glass-2: rgba(255,255,255,0.26);
+  --muted-shadow: 0 12px 32px rgba(52,40,33,0.08);
+  --radius: 18px;
+  --focus-glow: 0 6px 26px rgba(106,141,115,0.16);
+  --contrast: 1.02;
+  --max-width: 1200px;
+}
+
+/* --------- Base & Typography --------- */
+/* Big, mature, heavyweight system font stack for a premium feel (no external fonts) */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 10% 10%, rgba(107,130,112,0.03), transparent 12%),
+    linear-gradient(180deg, var(--bg) 0%, #F3F1F0 100%);
+  color:var(--espresso);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-family: "Segoe UI", "Helvetica Neue", system-ui, -apple-system, "Roboto", "Noto Sans", "Arial";
+  font-size:18px;               /* base font size large */
+  line-height:1.45;
+  letter-spacing:0.01em;
+  padding-bottom:80px;
+}
+
+/* Headings: big, bold, mature */
+h1,h2,h3,h4{margin:0;color:var(--espresso);font-weight:800}
+.logo{
+  font-size:48px;              /* large title */
+  letter-spacing:0.6px;
+  line-height:1;
+  text-transform:capitalize;
+  display:inline-block;
+}
+
+/* Animated gradient title — elegant and slow */
+.logo{
+  background: linear-gradient(90deg, var(--espresso), var(--sage), var(--sand));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  background-size:200% 100%;
+  animation: titleGradient 8s linear infinite;
+}
+@keyframes titleGradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.tagline{
+  font-size:15px;
+  color:rgba(52,40,33,0.75);
+  margin-top:6px;
+  font-weight:600;
+}
+
+/* --------- Layout --------- */
+.container{
+  max-width:var(--max-width);
+  margin:18px auto 40px;
+  display:grid;
+  grid-template-columns: 360px 1fr 320px;
+  gap:20px;
+  padding:0 20px;
+}
+
+/* Responsive: collapse to single column */
+@media (max-width:1060px){
+  .container{grid-template-columns:1fr; padding:0 18px}
+  .left-col{order:1}
+  .mid-col{order:2}
+  .right-col{order:3}
+}
+
+/* Card base: glass + deep shadow + soft border */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(246,243,241,0.92));
+  border-radius: var(--radius);
+  padding:20px;
+  border: 1px solid rgba(52,40,33,0.06);
+  box-shadow: var(--muted-shadow);
+  backdrop-filter: blur(6px) saturate(120%);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .22s ease;
+}
+.card:focus-within{ transform: translateY(-6px); box-shadow: 0 30px 60px rgba(52,40,33,0.12) }
+
+/* header & rules banner */
+.site-header{ padding:28px 24px 8px; text-align:center; }
+.rules-banner{
+  max-width:var(--max-width);
+  margin:10px auto 22px;
+  border-radius:12px;
+  overflow:hidden;
+  padding:10px 14px;
+  border:1px solid rgba(52,40,33,0.04);
+  background: linear-gradient(90deg, rgba(214,204,195,0.18), rgba(235,229,224,0.08));
+  box-shadow: 0 6px 20px rgba(52,40,33,0.04);
+}
+.rules-inner{ display:flex; gap:18px; align-items:center; justify-content:center; color:var(--espresso); font-weight:700; font-size:14px; }
+
+/* --------- Form styling: BIG inputs and varied borders --------- */
+/* Big form heading */
+.form-card h2{ font-size:22px; margin-bottom:12px; color:var(--espresso); }
+
+/* Labels bigger */
+label{ display:block; font-size:15px; color:var(--espresso); margin-bottom:8px; font-weight:700; }
+
+/* Input + textarea base — big and comfortable */
+input[type="text"], input[type="number"], textarea, select {
+  width:100%;
+  padding:16px 18px;              /* big input size */
+  font-size:17px;
+  border-radius:12px;
+  color:var(--espresso);
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,247,245,0.9));
+  outline:none;
+  transition: box-shadow .18s ease, transform .12s ease, border-color .14s ease;
+  margin-bottom:12px;
+  border: 3px solid rgba(52,40,33,0.06);
+  box-shadow: 0 6px 16px rgba(52,40,33,0.04) inset;
+}
+
+/* Textarea: taller with subtle grow on focus */
+textarea{ min-height:110px; resize:vertical; padding-top:14px; }
+
+/* Different border variants (cycled via classes in JS or CSS nth-child fallback)
+   We'll create classes to be applied to inputs for varied borders: dotted, double, groove, inset, dashed. */
+.input-border-dotted{ border-style: dotted; border-color: rgba(52,40,33,0.12); border-width:2px; }
+.input-border-double{ border-style: double; border-color: rgba(107,130,112,0.12); border-width:4px; }
+.input-border-groove{ border-style: groove; border-color: rgba(183,156,129,0.10); border-width:3px; }
+.input-border-inset{ border-style: inset; border-color: rgba(52,40,33,0.08); border-width:3px; }
+.input-border-dashed{ border-style: dashed; border-color: rgba(52,40,33,0.11); border-width:2.5px; }
+
+/* Focus states with big glow and soft translate */
+input:focus, textarea:focus, select:focus{
+  box-shadow: var(--focus-glow);
+  transform: translateY(-2px);
+  border-color: var(--sage);
+  caret-color: var(--espresso);
+}
+
+/* Placeholder styling */
+::placeholder{ color: rgba(52,40,33,0.36); font-weight:600; letter-spacing:0.01em; }
+
+/* Row layout for small groupings */
+.row{ display:flex; gap:12px; }
+.row label{ flex:1; }
+
+/* --------- Buttons: big, tactile, with many micro-animations --------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+  border: none;
+  transition: transform .12s ease, box-shadow .16s ease, filter .12s ease;
+  letter-spacing:0.02em;
+}
+
+.btn.primary{
+  background: linear-gradient(180deg, var(--sage), #5b7b63);
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(106,141,115,0.18), inset 0 -6px 0 rgba(0,0,0,0.06);
+  transform-origin:center;
+  animation: btnPulse 3.6s infinite;
+}
+@keyframes btnPulse{
+  0%{ box-shadow: 0 12px 30px rgba(106,141,115,0.12) }
+  50%{ box-shadow: 0 18px 44px rgba(106,141,115,0.18) }
+  100%{ box-shadow: 0 12px 30px rgba(106,141,115,0.12) }
+}
+.btn.primary:active{ transform: translateY(2px) scale(.995); filter:brightness(.98) }
+.btn.ghost{
+  background:transparent;
+  color:var(--espresso);
+  border:2px solid rgba(52,40,33,0.07);
+  box-shadow: none;
+}
+
+/* Small action buttons */
+.small-btn{ font-size:14px; padding:8px 12px; border-radius:10px; font-weight:800; }
+
+/* Icon breathing on hover */
+.icon{
+  width:44px; height:44px; display:inline-grid; place-items:center;
+  border-radius:10px;
+  font-size:20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(250,247,245,0.86));
+  border:1px solid rgba(52,40,33,0.04);
+  box-shadow: 0 6px 16px rgba(52,40,33,0.04) inset;
+  transition: transform .22s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
+  animation: floatSlow 5.2s ease-in-out infinite;
+}
+@keyframes floatSlow{ 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
+.icon:hover{ transform:translateY(-6px) scale(1.05); box-shadow: 0 22px 44px rgba(52,40,33,0.08) }
+
+/* --------- Task cards (glassmorphism, tilt, hover scale, stagger reveal) --------- */
+.tasks-grid{ display:grid; gap:14px; }
+
+.task{
+  display:block; padding:18px; border-radius:14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(246,243,241,0.95));
+  border: 1px solid rgba(52,40,33,0.05);
+  box-shadow: 0 18px 50px rgba(52,40,33,0.06);
+  transform-origin:center;
+  transition: transform .38s cubic-bezier(.18,.9,.28,1), box-shadow .26s ease, filter .28s;
+  overflow:hidden;
+}
+.task.show{ opacity:1; }
+.task:hover{ transform: translateY(-10px) rotateX(1deg) scale(1.01); box-shadow: 0 32px 72px rgba(52,40,33,0.12) }
+
+/* decorative subtle border top in khaki for categories */
+.task::before{
+  content:'';
+  position:absolute; left:0; right:0; top:0; height:4px;
+  background: linear-gradient(90deg, rgba(187,184,145,0.1), rgba(106,141,115,0.12));
+}
+
+/* badge styles */
+.badge{ padding:6px 10px; border-radius:999px; font-weight:900; font-size:13px; display:inline-block; background:rgba(52,40,33,0.03); color:var(--espresso); box-shadow: 0 6px 14px rgba(52,40,33,0.03); }
+
+/* urgent pulsing border (soft) */
+.urgent{
+  border: 3px solid rgba(106,141,115,0.18);
+  box-shadow: 0 0 0 8px rgba(106,141,115,0.04);
+  animation: urgentGlow 1.6s infinite;
+}
+@keyframes urgentGlow{
+  0%{ box-shadow: 0 0 0 4px rgba(106,141,115,0.02) }
+  50%{ box-shadow: 0 0 0 12px rgba(106,141,115,0.04) }
+  100%{ box-shadow: 0 0 0 4px rgba(106,141,115,0.02) }
+}
+
+/* clock badge */
+.clock{ display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; font-weight:900; background: linear-gradient(90deg, rgba(255,255,255,0.95), rgba(245,244,242,0.95)); border:1px solid rgba(52,40,33,0.04) }
+
+/* Animated entry (stagger handled by JS) */
+[data-reveal]{ opacity:0; transform: translateY(22px) rotateX(4deg); transition: opacity .64s ease, transform .64s cubic-bezier(.2,.9,.2,1) }
+[data-reveal].revealed{ opacity:1; transform: translateY(0) rotateX(0) }
+
+/* Scroll-triggered card shimmer */
+@keyframes cardShimmer{
+  0%{ filter:brightness(1) }
+  50%{ filter:brightness(1.03) }
+  100%{ filter:brightness(1) }
+}
+
+/* hover glass sheen */
+.task:hover::after{
+  content:''; position:absolute; left:-40%; top:-50%; width:160%; height:160%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.06), rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+  transform: rotate(18deg) translateY(0); pointer-events:none; mix-blend-mode:overlay;
+  animation: sheen 2.6s linear;
+}
+@keyframes sheen{ 0%{ transform: translateX(-60%) } 100%{ transform: translateX(60%) } }
+
+/* --------- Sidebar: leaderboard, skills, thanks (count-up animation) --------- */
+.leaderboard li{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed rgba(52,40,33,0.04); font-weight:700; font-size:15px; }
+.leaderboard .count{ color:var(--sage); font-weight:900; font-size:18px; }
+
+/* thanks and skills list */
+.thanks-list, .skills-list{ list-style:none; padding:0; margin:8px 0 0; max-height:240px; overflow:auto; }
+.thanks-list li, .skills-list li{
+  padding:12px; border-radius:12px; margin-bottom:10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,247,245,0.95));
+  border:1px solid rgba(52,40,33,0.04); font-weight:700; color:var(--espresso);
+}
+
+/* subtle animation for list items (pop-in) */
+.thanks-list li{ transform: scale(.99); transition: transform .18s ease, box-shadow .18s }
+.thanks-list li:hover{ transform: scale(1.01); box-shadow: 0 18px 40px rgba(52,40,33,0.06) }
+
+/* --------- Footer --------- */
+.site-footer{ text-align:center; padding:20px; color: rgba(52,40,33,0.6); font-weight:700; }
+
+/* --------- Micro-animations: rotate, flip, wobble, shake (used sparingly) --------- */
+@keyframes wobble{
+  0%{ transform: translateX(0) }
+  25%{ transform: translateX(-6px) rotate(-0.6deg) }
+  50%{ transform: translateX(6px) rotate(0.6deg) }
+  75%{ transform: translateX(-4px) rotate(-0.4deg) }
+  100%{ transform: translateX(0) }
+}
+@keyframes popIn{
+  0%{ transform: scale(.96); opacity:0 }
+  60%{ transform: scale(1.02); opacity:1 }
+  100%{ transform: scale(1) }
+}
+
+/* subtle focus ring for accessibility */
+:focus{ outline: 3px solid rgba(106,141,115,0.12); outline-offset:2px; }
+
+/* --------- Utility & polish --------- */
+/* large search input styling (big and prominent) */
+#search{
+  padding:14px 16px; font-size:16px; border-radius:12px; border:2px solid rgba(52,40,33,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,247,245,0.96));
+  box-shadow: 0 10px 26px rgba(52,40,33,0.04) inset;
+}
+
+/* subtle divider */
+.hr-soft{ height:1px; background:linear-gradient(90deg, transparent, rgba(52,40,33,0.04), transparent); margin:12px 0; }
+
+/* utility hidden */
+.hidden{ display:none !important; }
+
+/* tweak small-screen font sizes to remain large but usable */
+@media (max-width:480px){
+  .logo{ font-size:34px; }
+  body{ font-size:16px; }
+  input[type="text"], textarea, select { padding:14px; font-size:16px; }
+}

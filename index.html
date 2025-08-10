@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Neighborly — Tiny Favors, Big Smiles</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <h1 class="logo">Neighborly</h1>
+      <p class="tagline">Tiny Favors, Big Smiles</p>
+    </div>
+  </header>
+
+  <div class="rules-banner" id="rulesBanner" aria-live="polite">
+    <div class="rules-inner">
+      <strong>Rules:</strong>
+      <span>Max 15 min • No heavy/unsafe jobs • Meet in public • Cash in person • Respect privacy</span>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="left-col">
+      <form id="taskForm" class="card form-card" autocomplete="off">
+        <h2>Post a Task</h2>
+
+        <label>
+          Title
+          <input type="text" id="title" required maxlength="80" placeholder="e.g., Borrow sugar for 5 mins" />
+        </label>
+
+        <label>
+          Short description
+          <textarea id="description" rows="3" maxlength="200" placeholder="A short note about the task"></textarea>
+        </label>
+
+        <div class="row">
+          <label>
+            Category
+            <select id="category">
+              <option>Errands</option>
+              <option>Repair</option>
+              <option>Pet Care</option>
+              <option>Lend/Borrow</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label>
+            Estimated Time (mins)
+            <input type="number" id="timeNeeded" min="1" max="15" value="10" required />
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            Payment
+            <select id="payment">
+              <option>Cash</option>
+              <option>Free</option>
+              <option>IOU - Offer another micro-task</option>
+            </select>
+          </label>
+
+          <label>
+            Urgent
+            <input type="checkbox" id="urgent" />
+          </label>
+        </div>
+
+        <label>
+          Contact method (phone / note)
+          <input id="contact" placeholder="Phone or short instruction" maxlength="60" />
+        </label>
+
+        <label>
+          Location (street / area)
+          <input id="location" placeholder="Street or area" maxlength="60" />
+        </label>
+
+        <label>
+          Safe Meet Point
+          <select id="safePoint">
+            <option>Library Entrance</option>
+            <option>Park Bench #3</option>
+            <option>Coffee Shop Patio</option>
+            <option>Community Center</option>
+            <option>Bus Stop</option>
+          </select>
+        </label>
+
+        <label>
+          Neighborhood
+          <select id="neighborhood">
+            <option>My Street</option>
+            <option>Downtown</option>
+            <option>Riverside</option>
+            <option>Garden Block</option>
+            <option>Other</option>
+          </select>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Post Task</button>
+          <button type="reset" class="btn ghost">Clear</button>
+        </div>
+      </form>
+
+      <section class="card skills-card">
+        <h3>Skills Board</h3>
+        <form id="skillForm" class="skill-form">
+          <input id="skillName" placeholder="Your nickname" maxlength="30" required />
+          <input id="skillText" placeholder="Skill (e.g., Dog walking, Minor repairs)" maxlength="60" required />
+          <button class="btn" type="submit">Add Skill</button>
+        </form>
+        <ul id="skillsList" class="skills-list"></ul>
+      </section>
+    </section>
+
+    <section class="mid-col">
+      <div class="board-header card">
+        <h2>Task Board</h2>
+        <div class="board-controls">
+          <label>
+            Neighborhood:
+            <select id="filterNeighborhood"></select>
+          </label>
+          <input id="search" placeholder="Search title, desc or category" />
+        </div>
+      </div>
+
+      <div id="tasks" class="tasks-grid"></div>
+    </section>
+
+    <aside class="right-col">
+      <section class="card leaderboard-card">
+        <h3>Top Helpers</h3>
+        <ol id="leaderboard" class="leaderboard"></ol>
+      </section>
+
+      <section class="card thanks-card">
+        <h3>Thank You Wall</h3>
+        <form id="thankForm" class="thank-form">
+          <input id="thankText" maxlength="140" placeholder="Short anonymous note (e.g., Thanks to Sam!)" required />
+          <button class="btn" type="submit">Post</button>
+        </form>
+        <ul id="thanksList" class="thanks-list"></ul>
+      </section>
+
+      <section class="card info-card">
+        <h3>Quick Tips</h3>
+        <ul>
+          <li>Keep tasks ≤ 15 minutes.</li>
+          <li>Meet in public; cash exchanged in person.</li>
+          <li>Report unsafe requests to community moderators.</li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <small>© <span id="year"></span> Neighborly — Built for gentle neighbors. No signup, just kindness.</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
